@@ -2,209 +2,427 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Open Circle — What’s on for men</title>
-  <meta name="description" content="Community calendar of men’s events across Logan, Beenleigh and surrounds. Music, sheds, yarns, support. Nothing listed until it’s checked." />
+  <meta name="description" content="Community calendar of men’s events across Logan, Beenleigh and surrounds. Checked listings only." />
+  <meta name="theme-color" content="#b9def5" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ink: #1c1914;
-      --paper: #f4efe6;
-      --card: #fffdf8;
-      --line: #d9d0c2;
-      --accent: #b45309;
-      --accent-dark: #7c2d12;
-      --muted: #6b6358;
-      --good: #3f6212;
+      --sky: #c5e3f6;
+      --sky-2: #8ec8ea;
+      --cloud: #ffffff;
+      --mist: #e7f4fc;
+      --ink: #0f334c;
+      --muted: #3f6784;
+      --line: #8ebfdc;
+      --blue: #2b7eb3;
+      --blue-deep: #0e4d73;
+      --sun: #f2c15a;
+      --shadow: 0 12px 32px rgba(14, 77, 115, 0.14);
+      --radius: 18px;
+      --page-a: #b9def5;
+      --page-b: #d7ecf8;
+      --glow: #7ebfe8;
+      --header: color-mix(in srgb, var(--sky) 82%, white);
+      --chip-bg: rgba(255,255,255,.8);
+      --banner-bg: rgba(255,255,255,.55);
+      --ghost-bg: rgba(255,255,255,.75);
+      --theme-icon: "☾";
+    }
+    html[data-theme="dark"] {
+      --sky: #14324a;
+      --sky-2: #1b4666;
+      --cloud: #17364f;
+      --mist: #102a3d;
+      --ink: #e7f3fb;
+      --muted: #9db8cc;
+      --line: #2d5570;
+      --blue: #7ec4ea;
+      --blue-deep: #8fd0f0;
+      --sun: #f2c15a;
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+      --page-a: #0b1c28;
+      --page-b: #102433;
+      --glow: #1d4f72;
+      --header: rgba(11, 28, 40, .86);
+      --chip-bg: rgba(23, 54, 79, .9);
+      --banner-bg: rgba(23, 54, 79, .7);
+      --ghost-bg: rgba(23, 54, 79, .85);
+      --theme-icon: "☀";
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: Georgia, "Times New Roman", serif;
-      background: var(--paper);
+      margin: 0;
       color: var(--ink);
+      font-family: "DM Sans", system-ui, sans-serif;
+      background:
+        radial-gradient(900px 420px at 10% -10%, var(--cloud) 0%, transparent 55%),
+        radial-gradient(720px 400px at 95% 6%, var(--glow) 0%, transparent 52%),
+        linear-gradient(180deg, var(--page-a) 0%, var(--sky) 22%, var(--mist) 70%, var(--page-b) 100%);
+      transition: background .25s ease, color .25s ease;
+      min-height: 100vh;
       line-height: 1.55;
     }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 0 1.1rem 4rem; }
-    header {
-      padding: 1.4rem 0 0.6rem;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: auto -8% -18% -8%;
+      height: 280px;
+      background:
+        radial-gradient(ellipse at 20% 40%, rgba(255,255,255,.9) 0 42%, transparent 43%),
+        radial-gradient(ellipse at 48% 30%, rgba(255,255,255,.85) 0 38%, transparent 39%),
+        radial-gradient(ellipse at 78% 50%, rgba(255,255,255,.8) 0 40%, transparent 41%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1080px, calc(100% - 1.5rem));
+      margin: 0 auto;
+      padding-bottom: 4rem;
+    }
+    header.top {
+      position: sticky;
+      top: 0;
+      z-index: 20;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: baseline;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .brand {
-      font-size: 1.55rem;
-      letter-spacing: 0.02em;
-      font-weight: 700;
-    }
-    .brand span { color: var(--accent); font-weight: 400; }
-    nav a {
-      color: var(--ink);
-      text-decoration: none;
-      margin-left: 1rem;
-      font-size: 0.95rem;
+      gap: .75rem;
+      padding: .7rem 0;
+      background: var(--header);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid transparent;
     }
-    nav a:hover { border-bottom-color: var(--accent); }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 35%, #fff 0 28%, transparent 29%),
+        radial-gradient(circle at 62% 48%, #fff 0 34%, transparent 35%),
+        linear-gradient(160deg, #6eb5e0, #0e4d73);
+      box-shadow: 0 6px 14px rgba(58,124,165,.25);
+      flex: 0 0 auto;
+    }
+    .brand-text strong {
+      display: block;
+      font-family: Fraunces, Georgia, serif;
+      font-size: 1.12rem;
+      font-weight: 600;
+      letter-spacing: -.02em;
+    }
+    .brand-text small {
+      color: var(--muted);
+      font-size: .75rem;
+    }
+    nav {
+      display: flex;
+      gap: .2rem;
+    }
+    nav a {
+      color: var(--blue-deep);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 500;
+      padding: .45rem .7rem;
+      border-radius: 999px;
+    }
+    nav a:hover { background: var(--chip-bg); }
+    .tools { display: flex; align-items: center; gap: .25rem; }
+    .theme-toggle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--chip-bg);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 1.05rem;
+      line-height: 1;
+    }
+    .theme-toggle::before { content: var(--theme-icon); }
+    .hero {
+      padding: 1.4rem 0 1.8rem;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: var(--chip-bg);
+      border: 1px solid var(--line);
+      color: var(--blue-deep);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: .28rem .65rem;
+      border-radius: 999px;
+    }
+    h1 {
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -.03em;
+      font-size: clamp(2rem, 6vw, 3.35rem);
+      line-height: 1.12;
+      margin: .7rem 0 .7rem;
+      max-width: 14ch;
+    }
+    .lede {
+      max-width: 38rem;
+      font-size: 1.08rem;
+      color: var(--muted);
+      margin: 0 0 1.2rem;
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      text-decoration: none;
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 600;
+      padding: .78rem 1.15rem;
+      border-radius: 999px;
+      min-height: 46px;
+    }
+    .btn-primary {
+      background: var(--blue-deep);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(31, 78, 110, .22);
+    }
+    .btn-primary:hover { background: #16384f; }
+    html[data-theme="dark"] .btn-primary {
+      background: #3a8fc4;
+      color: #fff;
+    }
+    html[data-theme="dark"] .chip.active {
+      background: #3a8fc4;
+      color: #fff;
+      border-color: #3a8fc4;
+    }
+    .btn-ghost {
+      background: var(--ghost-bg);
+      color: var(--blue-deep);
+      border: 1px solid var(--line);
+    }
     .banner {
       overflow: hidden;
+      border-radius: 999px;
+      background: var(--banner-bg);
       border: 1px solid var(--line);
-      background: var(--ink);
-      color: var(--paper);
-      border-radius: 6px;
-      margin: 0.8rem 0 1.6rem;
+      margin: 1.4rem 0 2rem;
     }
     .banner-track {
       display: flex;
-      gap: 3rem;
-      white-space: nowrap;
-      padding: 0.65rem 0;
-      animation: scroll 32s linear infinite;
-      font-family: system-ui, sans-serif;
-      font-size: 0.92rem;
-      letter-spacing: 0.04em;
+      gap: 2.4rem;
+      width: max-content;
+      animation: scroll 36s linear infinite;
+      padding: .7rem 0;
+      font-size: .92rem;
     }
-    .banner-track span { opacity: 0.92; }
-    .banner-track strong { color: #fdba74; font-weight: 600; }
+    .banner-track span { color: var(--ink); padding: 0 1rem; }
+    .banner-track strong { color: var(--blue); }
     @keyframes scroll {
       from { transform: translateX(0); }
       to { transform: translateX(-50%); }
     }
-    h1 {
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      line-height: 1.15;
-      margin: 0 0 0.6rem;
+    section { margin: 2.2rem 0; }
+    section h2 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 1.7rem;
+      margin: 0 0 .85rem;
+      letter-spacing: -.02em;
     }
-    .lede { font-size: 1.15rem; max-width: 38rem; color: #3f3a33; }
-    .actions { margin: 1.3rem 0 2rem; display: flex; gap: 0.7rem; flex-wrap: wrap; }
-    .btn {
-      display: inline-block;
-      text-decoration: none;
-      padding: 0.65rem 1.05rem;
-      border-radius: 4px;
-      font-family: system-ui, sans-serif;
-      font-size: 0.95rem;
-    }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
     .filters {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin: 0 0 1.2rem;
-      font-family: system-ui, sans-serif;
+      gap: .45rem;
+      overflow-x: auto;
+      padding-bottom: .4rem;
+      margin-bottom: .45rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: .55rem 0 .3rem;
     }
     .chip {
+      flex: 0 0 auto;
       border: 1px solid var(--line);
-      background: var(--card);
-      padding: 0.28rem 0.7rem;
+      background: var(--chip-bg);
+      color: var(--blue-deep);
+      padding: .45rem .8rem;
       border-radius: 999px;
-      font-size: 0.82rem;
+      font: inherit;
+      font-size: .86rem;
+      font-weight: 500;
       cursor: pointer;
-      color: var(--ink);
     }
-    .chip.active, .chip:hover { border-color: var(--accent); background: #fff7ed; }
-    .grid { display: grid; gap: 0.85rem; }
-    article.event {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 1rem 1.1rem 0.95rem;
+    .chip.active {
+      background: var(--blue-deep);
+      color: #fff;
+      border-color: var(--blue-deep);
     }
-    article.event h3 { margin: 0 0 0.25rem; font-size: 1.18rem; }
-    .meta {
-      font-family: system-ui, sans-serif;
-      font-size: 0.86rem;
-      color: var(--muted);
-      margin-bottom: 0.45rem;
-    }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.55rem; }
-    .tag {
-      font-family: system-ui, sans-serif;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      border: 1px solid var(--line);
-      padding: 0.12rem 0.45rem;
-      border-radius: 3px;
-      color: var(--accent-dark);
-    }
-    section { margin: 2.4rem 0; }
-    section h2 { font-size: 1.45rem; margin: 0 0 0.7rem; }
-    .two {
+    .grid {
       display: grid;
-      gap: 1rem;
+      gap: .9rem;
       grid-template-columns: 1fr;
     }
-    @media (min-width: 720px) {
+    @media (min-width: 760px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      nav a { font-size: .95rem; }
+    }
+    article.event {
+      background: var(--cloud);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.2rem 1.1rem;
+      box-shadow: var(--shadow);
+    }
+    article.event h3 {
+      margin: 0 0 .3rem;
+      font-size: 1.2rem;
+      letter-spacing: -.01em;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: .88rem;
+      margin-bottom: .45rem;
+    }
+    article.event p { margin: 0; color: #2c4a60; }
+    .tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; }
+    .tag {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: var(--sky);
+      padding: .2rem .5rem;
+      border-radius: 999px;
+    }
+    .box, form.card {
+      background: var(--cloud);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.2rem 1.2rem;
+      box-shadow: var(--shadow);
+    }
+    .two {
+      display: grid;
+      gap: .9rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 760px) {
       .two { grid-template-columns: 1fr 1fr; }
     }
-    form, .box {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 1rem 1.1rem 1.15rem;
+    .box h3 { margin: 0 0 .4rem; font-size: 1.08rem; }
+    .note { color: var(--muted); font-size: .95rem; }
+    label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 600;
+      margin: .75rem 0 .28rem;
     }
-    label { display: block; font-family: system-ui, sans-serif; font-size: 0.82rem; margin: 0.65rem 0 0.2rem; }
     input, textarea, select {
       width: 100%;
-      padding: 0.5rem 0.55rem;
+      padding: .72rem .8rem;
       border: 1px solid var(--line);
-      border-radius: 4px;
+      border-radius: 12px;
       font: inherit;
-      background: #fff;
+      background: var(--mist);
+      color: var(--ink);
     }
-    textarea { min-height: 90px; }
-    .note { font-size: 0.92rem; color: var(--muted); }
+    input:focus, textarea:focus, select:focus {
+      outline: 2px solid #8ec4e4;
+      border-color: var(--blue);
+    }
+    textarea { min-height: 96px; resize: vertical; }
     footer {
       margin-top: 3rem;
-      padding-top: 1rem;
+      padding-top: 1.1rem;
       border-top: 1px solid var(--line);
-      font-size: 0.9rem;
       color: var(--muted);
+      font-size: .9rem;
     }
-    .hidden { display: none; }
+    .hidden { display: none !important; }
+    @media (max-width: 640px) {
+      nav a:nth-child(2) { display: none; }
+      h1 { max-width: none; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header>
-      <div class="brand">Open Circle <span>— men’s what’s on</span></div>
-      <nav>
-        <a href="#upcoming">Upcoming</a>
-        <a href="#submit">List an event</a>
-        <a href="#support">Support</a>
-      </nav>
+    <header class="top">
+      <a class="brand" href="#">
+        <span class="mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <strong>Open Circle</strong>
+          <small>What’s on for men</small>
+        </span>
+      </a>
+      <div class="tools">
+        <nav>
+          <a href="#upcoming">Upcoming</a>
+          <a href="#contact">Contact</a>
+          <a href="#support">Support</a>
+        </nav>
+        <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle dark mode"></button>
+      </div>
     </header>
 
-    <div class="banner" aria-label="What’s of interest">
-      <div class="banner-track">
-        <span><strong>Free</strong> Great Mates Meet · Fridays · KENG Slacks Creek</span>
-        <span><strong>Leisure</strong> Beenleigh District Men’s Shed · weekdays</span>
-        <span><strong>Community</strong> The Men’s Table · Logan Diggers</span>
-        <span><strong>Bookings</strong> Nothing goes up until Craig checks it</span>
-        <span><strong>Free</strong> Great Mates Meet · Fridays · KENG Slacks Creek</span>
-        <span><strong>Leisure</strong> Beenleigh District Men’s Shed · weekdays</span>
-        <span><strong>Community</strong> The Men’s Table · Logan Diggers</span>
-        <span><strong>Bookings</strong> Nothing goes up until Craig checks it</span>
+    <div class="hero">
+      <span class="eyebrow">Logan · Beenleigh · nearby</span>
+      <h1>What’s on for men.</h1>
+      <p class="lede">
+        Local events, checked before they go up. Sheds, yarns, music, arts, free catch-ups and support.
+        Send something in — it only goes live after it is validated.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#contact">Contact us</a>
+        <a class="btn btn-ghost" href="#support">Find support</a>
       </div>
     </div>
 
-    <h1>What’s on for men.<br />Local, checked, community-run.</h1>
-    <p class="lede">
-      A simple board for men’s events across Logan, Beenleigh and nearby.
-      Sheds, yarns, music, arts, free catch-ups and support.
-      Anyone can send something in. It only goes live after it is validated.
-    </p>
-    <div class="actions">
-      <a class="btn btn-primary" href="#submit">Send an event</a>
-      <a class="btn btn-ghost" href="#support">Find support</a>
+    <div class="banner" aria-label="What’s of interest">
+      <div class="banner-track">
+        <span><strong>Father’s Day</strong> Sunday 6 September</span>
+        <span><strong>R U OK? Day</strong> Thursday 10 September</span>
+        <span><strong>World Suicide Prevention Day</strong> 10 September</span>
+        <span><strong>International Men’s Day</strong> 19 November</span>
+        <span><strong>Free</strong> Great Mates Meet · Fridays · KENG</span>
+        <span><strong>Father’s Day</strong> Sunday 6 September</span>
+        <span><strong>R U OK? Day</strong> Thursday 10 September</span>
+        <span><strong>World Suicide Prevention Day</strong> 10 September</span>
+        <span><strong>International Men’s Day</strong> 19 November</span>
+        <span><strong>Free</strong> Great Mates Meet · Fridays · KENG</span>
+      </div>
     </div>
 
     <section id="upcoming">
       <h2>Upcoming</h2>
-      <div class="filters" id="filters">
+      <p class="filter-label">Type</p>
+      <div class="filters" id="typeFilters">
         <button class="chip active" data-filter="all">All</button>
         <button class="chip" data-filter="free">Free</button>
         <button class="chip" data-filter="bookings">Bookings essential</button>
@@ -213,29 +431,61 @@
         <button class="chip" data-filter="leisure">Leisure</button>
         <button class="chip" data-filter="support">Charity / support</button>
       </div>
+      <p class="filter-label">Where</p>
+      <div class="filters" id="placeFilters">
+        <button class="chip active" data-place="all">All places</button>
+        <button class="chip" data-place="local">Local</button>
+        <button class="chip" data-place="state">Queensland</button>
+        <button class="chip" data-place="national">National</button>
+        <button class="chip" data-place="global">Global</button>
+      </div>
       <div class="grid" id="events">
-        <article class="event" data-tags="free support">
+        <article class="event" data-tags="free support" data-place="national">
+          <h3>Father’s Day</h3>
+          <div class="meta">Sunday 6 September 2026 · Australia</div>
+          <p>First Sunday in September. A good week to check in on dads, grandads and the men who show up for kids — KENG Fathers Support is local if someone needs more than a barbecue.</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="national">
+          <h3>R U OK? Day</h3>
+          <div class="meta">Thursday 10 September 2026 · National</div>
+          <p>Same day as World Suicide Prevention Day this year. Ask, listen, don’t rush to fix. Resources: ruok.org.au</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="global">
+          <h3>International Men’s Day</h3>
+          <div class="meta">Wednesday 19 November 2026 · National</div>
+          <p>Focus is positive male role models and men’s health — physical and mental. A natural day for sheds, tables and clubs to open the door.</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="national">
+          <h3>Men’s Health Week</h3>
+          <div class="meta">15–21 June 2026 · National · next: June 2027</div>
+          <p>Australia’s week for men’s physical and mental health. 2026 has passed; lock local events in early for next year. amhf.org.au</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
           <h3>Great Mates Meet</h3>
           <div class="meta">Fridays · 9.30am–12.30pm · KENG, 177 Meakin Rd, Slacks Creek</div>
           <p>Yarn, barbecue, coffee. Men of any age. Come as you are.</p>
           <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
         </article>
-        <article class="event" data-tags="leisure">
+        <article class="event" data-tags="leisure" data-place="local">
           <h3>Beenleigh District Men’s Shed</h3>
           <div class="meta">Mon, Tue, Thu, Fri · 8.00–11.30am · 36 Martens St, Beenleigh</div>
-          <p>Hands-on work and company. Joining fee applies — call the shed before you first turn up.</p>
+          <p>Hands-on work and company. Call the shed before your first visit.</p>
           <div class="tags"><span class="tag">Leisure</span></div>
         </article>
-        <article class="event" data-tags="support bookings">
+        <article class="event" data-tags="support bookings" data-place="local">
           <h3>The Men’s Table — Logan</h3>
           <div class="meta">Check current night · Diggers Services Club, Logan</div>
-          <p>Regular table for men to talk without fixing each other. Book a seat with the group first.</p>
+          <p>A regular table for men to talk without fixing each other. Book a seat first.</p>
           <div class="tags"><span class="tag">Support</span><span class="tag">Bookings essential</span></div>
         </article>
-        <article class="event" data-tags="support">
+        <article class="event" data-tags="support" data-place="local">
           <h3>KENG Fathers Support</h3>
           <div class="meta">Tue–Thu 9am–4.30pm, Fri 9am–2.30pm · Slacks Creek &amp; Loganholme</div>
-          <p>Hayden Esparon and the KENG team. Practical support for dads. Phone 07 3808 1684.</p>
+          <p>Hayden Esparon and the KENG team. Practical support for dads. 07 3808 1684.</p>
           <div class="tags"><span class="tag">Support</span></div>
         </article>
       </div>
@@ -244,27 +494,30 @@
     <section id="new">
       <h2>What’s new</h2>
       <div class="box">
-        <p>This board is just standing up. First listings are the regulars already running — KENG, sheds, tables.</p>
-        <p class="note">New items appear here after Craig signs them off. No automated dump from the internet.</p>
+        <p>National dates now on the board: Father’s Day (6 Sep), R U OK? Day / World Suicide Prevention Day (10 Sep), International Men’s Day (19 Nov). Men’s Health Week 2026 (15–21 Jun) is listed for next year’s planning.</p>
+        <p class="note">Source for the national mental health dates: National Mental Health Commission calendar. Local listings are checked before they go up.</p>
       </div>
     </section>
 
-    <section id="submit">
-      <h2>List an event</h2>
-      <p class="note">Fill this in. It emails Craig. He checks the details, then adds it to the calendar. That is the whole method — human validation, then it goes up.</p>
-      <form action="mailto:craig@example.com?subject=Open%20Circle%20event%20request" method="post" enctype="text/plain">
-        <label for="org">Organisation</label>
-        <input id="org" name="Organisation" required placeholder="e.g. Beenleigh District Men’s Shed" />
-
-        <label for="title">Event name</label>
-        <input id="title" name="Event" required />
-
+    <section id="contact">
+      <h2>Contact us</h2>
+      <p class="note">Use this for event listings, a message to the group, or the weekly email list. Nothing is published until it is checked. The inbox is not shown on the page.</p>
+      <form class="card" action="mailto:theresearch4u@gmail.com?subject=Open%20Circle%20contact" method="post" enctype="text/plain">
+        <label for="reason">What is this about</label>
+        <select id="reason" name="Reason">
+          <option>List an event</option>
+          <option>Message the group</option>
+          <option>Opt in to what’s on</option>
+          <option>Something else</option>
+        </select>
+        <label for="org">Organisation (if listing)</label>
+        <input id="org" name="Organisation" placeholder="e.g. Beenleigh District Men’s Shed" />
+        <label for="title">Event or subject</label>
+        <input id="title" name="Subject" required />
         <label for="when">When</label>
-        <input id="when" name="When" required placeholder="Day, time, or date" />
-
+        <input id="when" name="When" placeholder="Day, time, or date" />
         <label for="where">Where</label>
-        <input id="where" name="Where" required />
-
+        <input id="where" name="Where" />
         <label for="type">Type</label>
         <select id="type" name="Type">
           <option>Free</option>
@@ -273,38 +526,37 @@
           <option>Arts</option>
           <option>Leisure</option>
           <option>Charity / support</option>
+          <option>Not an event</option>
         </select>
-
-        <label for="cost">Cost</label>
-        <input id="cost" name="Cost" placeholder="Free / gold coin / $…" />
-
-        <label for="about">What happens</label>
-        <textarea id="about" name="About" required></textarea>
-
-        <label for="contact">Contact for the public</label>
-        <input id="contact" name="Public contact" placeholder="Phone, email or page" />
-
-        <label for="from">Your name and email</label>
+        <label for="reach">Reach</label>
+        <select id="reach" name="Reach">
+          <option>Local (Logan / Beenleigh)</option>
+          <option>Queensland</option>
+          <option>National</option>
+          <option>Global</option>
+        </select>
+        <label for="about">Message</label>
+        <textarea id="about" name="Message" required></textarea>
+        <label for="from">Your email</label>
         <input id="from" name="From" required type="email" />
-
-        <p style="margin-top:1rem">
-          <button class="btn btn-primary" type="submit">Send to Craig</button>
+        <p style="margin:1rem 0 0">
+          <button class="btn btn-primary" type="submit">Send</button>
         </p>
       </form>
     </section>
 
     <section id="support">
-      <h2>Look up charity or support</h2>
+      <h2>Look up support</h2>
       <div class="two">
         <div class="box">
-          <h3 style="margin-top:0">If it is urgent</h3>
+          <h3>If it is urgent</h3>
           <p>Call <strong>000</strong> if someone is in immediate danger.</p>
           <p>Lifeline <strong>13 11 14</strong><br />Suicide Call Back Service <strong>1300 659 467</strong><br />MensLine Australia <strong>1300 78 99 78</strong></p>
         </div>
         <div class="box">
-          <h3 style="margin-top:0">Local</h3>
+          <h3>Local</h3>
           <p><strong>KENG</strong> — 07 3808 1684 · keng.org.au<br />
-          <strong>Logan City Council men’s programs</strong> — logan.qld.gov.au (Men’s health)</p>
+          <strong>Logan City Council</strong> — men’s programs on logan.qld.gov.au</p>
           <p class="note">This site lists community events. It is not a crisis service.</p>
         </div>
       </div>
@@ -312,41 +564,54 @@
 
     <section id="direct">
       <h2>Direct support</h2>
-      <div class="two">
-        <div class="box">
-          <h3 style="margin-top:0">Message the group</h3>
-          <p>Want a yarn with the people behind this board? Send a short note. Same rule — it comes to Craig first.</p>
-          <p><a class="btn btn-ghost" href="mailto:craig@example.com?subject=Open%20Circle%20message">Message Craig</a></p>
-        </div>
-        <div class="box">
-          <h3 style="margin-top:0">Opt-in email</h3>
-          <p>Occasional “what’s on this week”. No sales list. You can leave anytime.</p>
-          <form action="mailto:craig@example.com?subject=Open%20Circle%20opt-in" method="post" enctype="text/plain">
-            <label for="opt">Email</label>
-            <input id="opt" name="Opt-in email" type="email" required />
-            <p style="margin-top:0.8rem"><button class="btn btn-primary" type="submit">Opt in</button></p>
-          </form>
-        </div>
+      <div class="box">
+        <p>To message the group or join the occasional “what’s on” email, use <a href="#contact">Contact us</a>. Same rule: it is checked before anything is published. No sales list.</p>
       </div>
     </section>
 
     <footer>
       Open Circle is a community noticeboard. Listings are validated before they appear.
-      Working name — swap it if a better one sticks.
     </footer>
   </div>
   <script>
-    const chips = document.querySelectorAll(".chip");
+    const root = document.documentElement;
+    const toggle = document.getElementById("themeToggle");
+    const saved = localStorage.getItem("oc-theme");
+    const preferDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const start = saved || (preferDark ? "dark" : "light");
+    root.setAttribute("data-theme", start);
+    toggle.addEventListener("click", () => {
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("oc-theme", next);
+    });
+
     const cards = document.querySelectorAll(".event");
-    chips.forEach((chip) => {
+    let typeFilter = "all";
+    let placeFilter = "all";
+    function applyFilters() {
+      cards.forEach((card) => {
+        const tags = card.dataset.tags || "";
+        const place = card.dataset.place || "";
+        const typeOk = typeFilter === "all" || tags.includes(typeFilter);
+        const placeOk = placeFilter === "all" || place === placeFilter;
+        card.classList.toggle("hidden", !(typeOk && placeOk));
+      });
+    }
+    document.querySelectorAll("#typeFilters .chip").forEach((chip) => {
       chip.addEventListener("click", () => {
-        chips.forEach((c) => c.classList.remove("active"));
+        document.querySelectorAll("#typeFilters .chip").forEach((c) => c.classList.remove("active"));
         chip.classList.add("active");
-        const f = chip.dataset.filter;
-        cards.forEach((card) => {
-          const tags = card.dataset.tags || "";
-          card.classList.toggle("hidden", f !== "all" && !tags.includes(f));
-        });
+        typeFilter = chip.dataset.filter;
+        applyFilters();
+      });
+    });
+    document.querySelectorAll("#placeFilters .chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll("#placeFilters .chip").forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+        placeFilter = chip.dataset.place;
+        applyFilters();
       });
     });
   </script>
