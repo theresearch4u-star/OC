@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open Circle — What’s on for men</title>
+  <meta name="description" content="Community calendar of men’s events across Logan, Beenleigh and surrounds. Music, sheds, yarns, support. Nothing listed until it’s checked." />
+  <style>
+    :root {
+      --ink: #1c1914;
+      --paper: #f4efe6;
+      --card: #fffdf8;
+      --line: #d9d0c2;
+      --accent: #b45309;
+      --accent-dark: #7c2d12;
+      --muted: #6b6358;
+      --good: #3f6212;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 1.1rem 4rem; }
+    header {
+      padding: 1.4rem 0 0.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .brand {
+      font-size: 1.55rem;
+      letter-spacing: 0.02em;
+      font-weight: 700;
+    }
+    .brand span { color: var(--accent); font-weight: 400; }
+    nav a {
+      color: var(--ink);
+      text-decoration: none;
+      margin-left: 1rem;
+      font-size: 0.95rem;
+      border-bottom: 1px solid transparent;
+    }
+    nav a:hover { border-bottom-color: var(--accent); }
+    .banner {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 6px;
+      margin: 0.8rem 0 1.6rem;
+    }
+    .banner-track {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      padding: 0.65rem 0;
+      animation: scroll 32s linear infinite;
+      font-family: system-ui, sans-serif;
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+    }
+    .banner-track span { opacity: 0.92; }
+    .banner-track strong { color: #fdba74; font-weight: 600; }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      line-height: 1.15;
+      margin: 0 0 0.6rem;
+    }
+    .lede { font-size: 1.15rem; max-width: 38rem; color: #3f3a33; }
+    .actions { margin: 1.3rem 0 2rem; display: flex; gap: 0.7rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 0.65rem 1.05rem;
+      border-radius: 4px;
+      font-family: system-ui, sans-serif;
+      font-size: 0.95rem;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin: 0 0 1.2rem;
+      font-family: system-ui, sans-serif;
+    }
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--card);
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .chip.active, .chip:hover { border-color: var(--accent); background: #fff7ed; }
+    .grid { display: grid; gap: 0.85rem; }
+    article.event {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 1rem 1.1rem 0.95rem;
+    }
+    article.event h3 { margin: 0 0 0.25rem; font-size: 1.18rem; }
+    .meta {
+      font-family: system-ui, sans-serif;
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.55rem; }
+    .tag {
+      font-family: system-ui, sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--line);
+      padding: 0.12rem 0.45rem;
+      border-radius: 3px;
+      color: var(--accent-dark);
+    }
+    section { margin: 2.4rem 0; }
+    section h2 { font-size: 1.45rem; margin: 0 0 0.7rem; }
+    .two {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 720px) {
+      .two { grid-template-columns: 1fr 1fr; }
+    }
+    form, .box {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 1rem 1.1rem 1.15rem;
+    }
+    label { display: block; font-family: system-ui, sans-serif; font-size: 0.82rem; margin: 0.65rem 0 0.2rem; }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.5rem 0.55rem;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      font: inherit;
+      background: #fff;
+    }
+    textarea { min-height: 90px; }
+    .note { font-size: 0.92rem; color: var(--muted); }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">Open Circle <span>— men’s what’s on</span></div>
+      <nav>
+        <a href="#upcoming">Upcoming</a>
+        <a href="#submit">List an event</a>
+        <a href="#support">Support</a>
+      </nav>
+    </header>
+
+    <div class="banner" aria-label="What’s of interest">
+      <div class="banner-track">
+        <span><strong>Free</strong> Great Mates Meet · Fridays · KENG Slacks Creek</span>
+        <span><strong>Leisure</strong> Beenleigh District Men’s Shed · weekdays</span>
+        <span><strong>Community</strong> The Men’s Table · Logan Diggers</span>
+        <span><strong>Bookings</strong> Nothing goes up until Craig checks it</span>
+        <span><strong>Free</strong> Great Mates Meet · Fridays · KENG Slacks Creek</span>
+        <span><strong>Leisure</strong> Beenleigh District Men’s Shed · weekdays</span>
+        <span><strong>Community</strong> The Men’s Table · Logan Diggers</span>
+        <span><strong>Bookings</strong> Nothing goes up until Craig checks it</span>
+      </div>
+    </div>
+
+    <h1>What’s on for men.<br />Local, checked, community-run.</h1>
+    <p class="lede">
+      A simple board for men’s events across Logan, Beenleigh and nearby.
+      Sheds, yarns, music, arts, free catch-ups and support.
+      Anyone can send something in. It only goes live after it is validated.
+    </p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#submit">Send an event</a>
+      <a class="btn btn-ghost" href="#support">Find support</a>
+    </div>
+
+    <section id="upcoming">
+      <h2>Upcoming</h2>
+      <div class="filters" id="filters">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="free">Free</button>
+        <button class="chip" data-filter="bookings">Bookings essential</button>
+        <button class="chip" data-filter="music">Music</button>
+        <button class="chip" data-filter="arts">Arts</button>
+        <button class="chip" data-filter="leisure">Leisure</button>
+        <button class="chip" data-filter="support">Charity / support</button>
+      </div>
+      <div class="grid" id="events">
+        <article class="event" data-tags="free support">
+          <h3>Great Mates Meet</h3>
+          <div class="meta">Fridays · 9.30am–12.30pm · KENG, 177 Meakin Rd, Slacks Creek</div>
+          <p>Yarn, barbecue, coffee. Men of any age. Come as you are.</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="leisure">
+          <h3>Beenleigh District Men’s Shed</h3>
+          <div class="meta">Mon, Tue, Thu, Fri · 8.00–11.30am · 36 Martens St, Beenleigh</div>
+          <p>Hands-on work and company. Joining fee applies — call the shed before you first turn up.</p>
+          <div class="tags"><span class="tag">Leisure</span></div>
+        </article>
+        <article class="event" data-tags="support bookings">
+          <h3>The Men’s Table — Logan</h3>
+          <div class="meta">Check current night · Diggers Services Club, Logan</div>
+          <p>Regular table for men to talk without fixing each other. Book a seat with the group first.</p>
+          <div class="tags"><span class="tag">Support</span><span class="tag">Bookings essential</span></div>
+        </article>
+        <article class="event" data-tags="support">
+          <h3>KENG Fathers Support</h3>
+          <div class="meta">Tue–Thu 9am–4.30pm, Fri 9am–2.30pm · Slacks Creek &amp; Loganholme</div>
+          <p>Hayden Esparon and the KENG team. Practical support for dads. Phone 07 3808 1684.</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="new">
+      <h2>What’s new</h2>
+      <div class="box">
+        <p>This board is just standing up. First listings are the regulars already running — KENG, sheds, tables.</p>
+        <p class="note">New items appear here after Craig signs them off. No automated dump from the internet.</p>
+      </div>
+    </section>
+
+    <section id="submit">
+      <h2>List an event</h2>
+      <p class="note">Fill this in. It emails Craig. He checks the details, then adds it to the calendar. That is the whole method — human validation, then it goes up.</p>
+      <form action="mailto:craig@example.com?subject=Open%20Circle%20event%20request" method="post" enctype="text/plain">
+        <label for="org">Organisation</label>
+        <input id="org" name="Organisation" required placeholder="e.g. Beenleigh District Men’s Shed" />
+
+        <label for="title">Event name</label>
+        <input id="title" name="Event" required />
+
+        <label for="when">When</label>
+        <input id="when" name="When" required placeholder="Day, time, or date" />
+
+        <label for="where">Where</label>
+        <input id="where" name="Where" required />
+
+        <label for="type">Type</label>
+        <select id="type" name="Type">
+          <option>Free</option>
+          <option>Bookings essential</option>
+          <option>Music</option>
+          <option>Arts</option>
+          <option>Leisure</option>
+          <option>Charity / support</option>
+        </select>
+
+        <label for="cost">Cost</label>
+        <input id="cost" name="Cost" placeholder="Free / gold coin / $…" />
+
+        <label for="about">What happens</label>
+        <textarea id="about" name="About" required></textarea>
+
+        <label for="contact">Contact for the public</label>
+        <input id="contact" name="Public contact" placeholder="Phone, email or page" />
+
+        <label for="from">Your name and email</label>
+        <input id="from" name="From" required type="email" />
+
+        <p style="margin-top:1rem">
+          <button class="btn btn-primary" type="submit">Send to Craig</button>
+        </p>
+      </form>
+    </section>
+
+    <section id="support">
+      <h2>Look up charity or support</h2>
+      <div class="two">
+        <div class="box">
+          <h3 style="margin-top:0">If it is urgent</h3>
+          <p>Call <strong>000</strong> if someone is in immediate danger.</p>
+          <p>Lifeline <strong>13 11 14</strong><br />Suicide Call Back Service <strong>1300 659 467</strong><br />MensLine Australia <strong>1300 78 99 78</strong></p>
+        </div>
+        <div class="box">
+          <h3 style="margin-top:0">Local</h3>
+          <p><strong>KENG</strong> — 07 3808 1684 · keng.org.au<br />
+          <strong>Logan City Council men’s programs</strong> — logan.qld.gov.au (Men’s health)</p>
+          <p class="note">This site lists community events. It is not a crisis service.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="direct">
+      <h2>Direct support</h2>
+      <div class="two">
+        <div class="box">
+          <h3 style="margin-top:0">Message the group</h3>
+          <p>Want a yarn with the people behind this board? Send a short note. Same rule — it comes to Craig first.</p>
+          <p><a class="btn btn-ghost" href="mailto:craig@example.com?subject=Open%20Circle%20message">Message Craig</a></p>
+        </div>
+        <div class="box">
+          <h3 style="margin-top:0">Opt-in email</h3>
+          <p>Occasional “what’s on this week”. No sales list. You can leave anytime.</p>
+          <form action="mailto:craig@example.com?subject=Open%20Circle%20opt-in" method="post" enctype="text/plain">
+            <label for="opt">Email</label>
+            <input id="opt" name="Opt-in email" type="email" required />
+            <p style="margin-top:0.8rem"><button class="btn btn-primary" type="submit">Opt in</button></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Open Circle is a community noticeboard. Listings are validated before they appear.
+      Working name — swap it if a better one sticks.
+    </footer>
+  </div>
+  <script>
+    const chips = document.querySelectorAll(".chip");
+    const cards = document.querySelectorAll(".event");
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        chips.forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+        const f = chip.dataset.filter;
+        cards.forEach((card) => {
+          const tags = card.dataset.tags || "";
+          card.classList.toggle("hidden", f !== "all" && !tags.includes(f));
+        });
+      });
+    });
+  </script>
+</body>
+</html>
