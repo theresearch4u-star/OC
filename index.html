@@ -213,6 +213,22 @@
       margin-top: 2.2rem; padding-top: .9rem;
       border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem;
     }
+    .wordmark {
+      display: inline-flex;
+      align-items: baseline;
+      gap: .4rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: .72rem;
+    }
+    .wordmark i {
+      font-style: normal;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 1px;
+    }
+    .hero .wordmark { color: var(--navy); margin-bottom: .35rem; }
+    footer .wordmark { display: flex; margin-bottom: .45rem; color: var(--navy); }
     .joke-toast {
       position: fixed; left: 50%; bottom: 1rem; z-index: 40;
       transform: translateX(-50%) translateY(120%);
@@ -260,6 +276,7 @@
 
   <div class="wrap">
     <div class="hero">
+      <div class="wordmark" aria-hidden="true">Open <i>Circle</i></div>
       <div class="eyebrow">Logan · Beenleigh · Queensland</div>
       <h1>What’s on for men</h1>
       <p class="lede">Checked community listings. Sheds, yarns, music, arts and support. Nothing goes up until it is reviewed.</p>
@@ -276,6 +293,8 @@
         <span><strong>World Suicide Prevention Day</strong> 10 Sep</span>
         <span><strong>International Men’s Day</strong> 19 Nov</span>
         <span><strong>Great Mates Meet</strong> Fridays · KENG</span>
+        <span><strong>Beenleigh RSL</strong> Diggers Day · Thursdays</span>
+        <span><strong>Neighbourhood Centre</strong> James St · weekdays</span>
         <span><strong>Father’s Day</strong> Sun 6 Sep</span>
         <span><strong>R U OK? Day</strong> Thu 10 Sep</span>
         <span><strong>World Suicide Prevention Day</strong> 10 Sep</span>
@@ -353,14 +372,56 @@
           <p>Hayden Esparon and the KENG team. Practical support for dads. 07 3808 1684.</p>
           <div class="tags"><span class="tag">Support</span></div>
         </article>
+        <article class="event" data-tags="leisure support" data-place="local">
+          <h3>Crestmead Community Centre</h3>
+          <div class="meta">Gimlet Street, Crestmead Community Park · 07 3805 4100</div>
+          <p>Hall, groups and local programs. Ask the centre what’s on this week for men and families.</p>
+          <div class="tags"><span class="tag">Leisure</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
+          <h3>Beenleigh Neighbourhood Centre</h3>
+          <div class="meta">Mon–Fri 9am–4pm · 10–12 James Street, Beenleigh · 07 3287 2840</div>
+          <p>Walk-in community hub: information, groups, JP service most weekdays. beenleigh.org.au</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="leisure support" data-place="local">
+          <h3>Beenleigh RSL &amp; Golf Club</h3>
+          <div class="meta">13 Bardyn Halliday Drive, Mt Warren Park · 07 3287 4000</div>
+          <p>Local RSL. Diggers Day on alternating Thursdays from 11am. Veteran welfare by appointment.</p>
+          <div class="tags"><span class="tag">Leisure</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="leisure support" data-place="local">
+          <h3>Beenleigh Senior Citizens — Your Lifestyle Centre</h3>
+          <div class="meta">20 Alamein Street, Beenleigh · 07 3287 1477</div>
+          <p>Social programs, meals and healthy ageing for over-50s. Call for the current timetable. ylc.org.au</p>
+          <div class="tags"><span class="tag">Leisure</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free leisure support" data-place="local">
+          <h3>KENG Loganholme — Healthy Ageing Hub</h3>
+          <div class="meta">Tudor Park Centre, 71–78 Clarks Road, Loganholme</div>
+          <p>Guest talks, games, walking group and classes. Free. Ask KENG for the week’s times. 07 3808 1684</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Leisure</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="local">
+          <h3>Logan &amp; Albert Vietnam Veterans</h3>
+          <div class="meta">Logan / Woodridge · 07 3803 6240</div>
+          <p>Vietnam Veterans Association of Australia, Logan &amp; Albert. Call before visiting. Beenleigh RSL can also point veterans to local advocacy.</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="local">
+          <h3>Aboriginal and Torres Strait Islander support</h3>
+          <div class="meta">Beenleigh and Logan</div>
+          <p>Beenleigh Housing Development Company — 9 Main Street, Beenleigh · 07 3807 0901. ATSICHS Logan Medical Clinic. Logan District Elders · 07 3803 7294.</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
       </div>
     </section>
 
     <section id="new">
       <h2>What’s new</h2>
       <div class="box">
-        <p>National dates on the board: Father’s Day (6 Sep), R U OK? Day / World Suicide Prevention Day (10 Sep), International Men’s Day (19 Nov).</p>
-        <p class="note">Local listings are checked before they go up.</p>
+        <p>Added local hubs: Crestmead Community Centre, Beenleigh Neighbourhood Centre, Beenleigh RSL, Senior Citizens on Alamein St, KENG Loganholme, Logan &amp; Albert Vietnam Veterans, and Aboriginal and Torres Strait Islander services in Beenleigh and Logan.</p>
+        <p class="note">Call the venue for this week’s times. Listings are checked before they go up.</p>
       </div>
     </section>
 
@@ -425,8 +486,19 @@
       </div>
     </section>
 
+    <section id="disclaimer">
+      <h2>Mate to mate</h2>
+      <div class="box">
+        <p>This board is blokes pointing other blokes to what’s on. It is not a doctor, a counsellor, or a crisis line.</p>
+        <p>Listings are checked before they go up, but times change. Ring the venue before you drive over.</p>
+        <p>If you or a mate is doing it tough, say something. Stay for a yarn. If it is heavier than that: <strong>Lifeline 13 11 14</strong> · <strong>MensLine 1300 78 99 78</strong> · <strong>000</strong> if someone is in danger.</p>
+        <p class="note">You are welcome here whether you talk a lot or sit quiet with a cuppa.</p>
+      </div>
+    </section>
+
     <footer>
-      Open Circle is a community noticeboard. Listings are validated before they appear. Tap the logo for a dad joke.
+      <span class="wordmark">Open <i>Circle</i></span>
+      Mate to mate community noticeboard. Listings validated before they appear. Tap the name up top for a dad joke.
     </footer>
   </div>
   <div class="joke-toast" id="jokeToast" role="status"></div>
