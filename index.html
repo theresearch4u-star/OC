@@ -6,6 +6,12 @@
   <title>Open Circle</title>
   <meta name="description" content="Community calendar of men’s events across Logan, Beenleigh and surrounds. Checked listings only." />
   <meta name="theme-color" content="#0e4d73" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Open Circle" />
+  <meta property="og:title" content="Open Circle — what’s on for men" />
+  <meta property="og:description" content="Mate-to-mate board of local catch-ups, sheds, clubs and support across Logan and Beenleigh." />
+  <meta property="og:url" content="https://theresearch4u-star.github.io/OC/" />
+  <meta property="og:locale" content="en_AU" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -93,6 +99,26 @@
       font-weight: 600;
       padding: .45rem .55rem;
       opacity: .9;
+    }
+    .share {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      color: inherit;
+      text-decoration: none;
+      font-size: .78rem;
+      font-weight: 650;
+      letter-spacing: .04em;
+      padding: .35rem .55rem;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 4px;
+      opacity: .95;
+    }
+    .share b {
+      font-size: .8rem;
+      font-weight: 800;
+      width: 16px;
+      text-align: center;
     }
     .theme-toggle {
       width: 36px; height: 36px;
@@ -251,6 +277,8 @@
     .tools { display: flex; align-items: center; }
     @media (max-width: 640px) {
       nav a { padding: .4rem .4rem; font-size: .8rem; }
+      .share { padding: .35rem .45rem; }
+      .share span { display: none; }
     }
   </style>
 </head>
@@ -268,6 +296,9 @@
             <a href="#contact">Contact</a>
             <a href="#support">Support</a>
           </nav>
+          <a class="share" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftheresearch4u-star.github.io%2FOC%2F" target="_blank" rel="noopener noreferrer" aria-label="Share Open Circle on Facebook">
+            <b>f</b> <span>Share</span>
+          </a>
           <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle dark mode"></button>
         </div>
       </header>
