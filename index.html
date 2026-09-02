@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Open Circle</title>
+  <meta name="description" content="Community calendar of men’s events across Logan, Beenleigh and surrounds. Checked listings only." />
+  <meta name="theme-color" content="#0e4d73" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Open Circle" />
+  <meta property="og:title" content="Open Circle — what’s on for men" />
+  <meta property="og:description" content="Mate-to-mate board of local catch-ups, sheds, clubs and support across Logan and Beenleigh." />
+  <meta property="og:url" content="https://theresearch4u-star.github.io/OC/" />
+  <meta property="og:locale" content="en_AU" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f7fa;
+      --card: #ffffff;
+      --ink: #122433;
+      --muted: #5b6e7e;
+      --line: #d5dee6;
+      --navy: #0e3d5c;
+      --navy-2: #15557d;
+      --sky: #e8eef3;
+      --accent: #1a6b99;
+      --shadow: 0 1px 2px rgba(18,36,51,.06), 0 8px 24px rgba(18,36,51,.06);
+      --header: #0e3d5c;
+    }
+    html[data-theme="dark"] {
+      --bg: #0d1720;
+      --card: #152433;
+      --ink: #e8eef3;
+      --muted: #9aafc0;
+      --line: #2a3d4e;
+      --navy: #d7e6f1;
+      --navy-2: #8fbfd9;
+      --sky: #13202b;
+      --accent: #7eb7d8;
+      --shadow: 0 8px 24px rgba(0,0,0,.28);
+      --header: #0a141c;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Source Sans 3", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    .bar {
+      background: var(--header);
+      color: #fff;
+    }
+    html[data-theme="dark"] .bar { color: var(--ink); }
+    .bar-inner, .wrap {
+      width: min(1040px, calc(100% - 1.5rem));
+      margin: 0 auto;
+    }
+    header.top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .6rem;
+      min-height: 58px;
+    }
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: .4rem;
+      background: none;
+      border: 0;
+      color: inherit;
+      padding: .2rem 0;
+      cursor: pointer;
+      font: inherit;
+    }
+    .brand-open,
+    .brand-circle {
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .brand-circle {
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 1px;
+      line-height: 1.1;
+    }
+    nav { display: flex; align-items: center; gap: .1rem; }
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 600;
+      padding: .45rem .55rem;
+      opacity: .9;
+    }
+    .share {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      color: inherit;
+      text-decoration: none;
+      font-size: .78rem;
+      font-weight: 650;
+      letter-spacing: .04em;
+      padding: .35rem .55rem;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 4px;
+      opacity: .95;
+    }
+    .share b {
+      font-size: .8rem;
+      font-weight: 800;
+      width: 16px;
+      text-align: center;
+    }
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.3);
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+    html[data-theme="light"] .theme-toggle::before { content: "☾"; }
+    html[data-theme="dark"] .theme-toggle::before { content: "☀"; }
+    html:not([data-theme]) .theme-toggle::before { content: "☾"; }
+    .wrap { padding: 1.4rem 0 3.5rem; }
+    .hero, .banner, section, footer {
+      animation: fadeIn .7s ease both;
+    }
+    .banner { animation-delay: .08s; }
+    #upcoming { animation-delay: .16s; }
+    #new { animation-delay: .22s; }
+    #contact { animation-delay: .28s; }
+    #support { animation-delay: .34s; }
+    footer { animation-delay: .4s; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+    .chip, .btn, nav a, article.event, .box {
+      transition: background .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .hero { padding: .4rem 0 1.2rem; }
+    .live-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem .9rem;
+      margin: 0 0 1rem;
+      font-size: .88rem;
+      color: var(--muted);
+    }
+    .live-bar strong { color: var(--ink); font-weight: 700; }
+    .live-bar time { font-variant-numeric: tabular-nums; }
+    .init-grid {
+      display: grid;
+      gap: .7rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 760px) {
+      .init-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .init-grid a { color: var(--accent); }
+    .eyebrow {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    h1 {
+      margin: .35rem 0 .5rem;
+      font-size: clamp(1.55rem, 5vw, 2.15rem);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.2;
+    }
+    .lede { margin: 0 0 1rem; max-width: 36rem; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 42px; padding: .55rem 1rem;
+      border-radius: 6px; text-decoration: none; border: 0;
+      font: inherit; font-weight: 650; cursor: pointer;
+    }
+    .btn-primary { background: var(--navy); color: #fff; }
+    html[data-theme="dark"] .btn-primary { background: #1a6b99; color: #fff; }
+    .btn-ghost { background: var(--card); color: var(--navy); border: 1px solid var(--line); }
+    .banner {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--card);
+      margin: 0 0 1.6rem;
+    }
+    .banner-track {
+      display: flex; gap: 2rem; width: max-content;
+      animation: scroll 38s linear infinite;
+      padding: .55rem 0; font-size: .88rem;
+    }
+    .banner-track strong { color: var(--accent); }
+    .banner-track span { padding: 0 .8rem; white-space: nowrap; }
+    @keyframes scroll { to { transform: translateX(-50%); } }
+    section { margin: 1.7rem 0; }
+    section h2 { margin: 0 0 .7rem; font-size: 1.25rem; }
+    .filter-label {
+      margin: .45rem 0 .25rem;
+      font-size: .68rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+    }
+    .filters { display: flex; gap: .35rem; overflow-x: auto; padding-bottom: .35rem; }
+    .chip {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      padding: .32rem .7rem;
+      border-radius: 4px;
+      font: inherit; font-size: .84rem; cursor: pointer;
+    }
+    .chip.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+    html[data-theme="dark"] .chip.active { background: #1a6b99; border-color: #1a6b99; }
+    .grid { display: grid; gap: .7rem; grid-template-columns: 1fr; }
+    @media (min-width: 760px) {
+      .grid, .two { grid-template-columns: 1fr 1fr; }
+    }
+    article.event, .box, form.card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 1rem 1.05rem;
+    }
+    article.event h3 { margin: 0 0 .2rem; font-size: 1.08rem; }
+    .meta { color: var(--muted); font-size: .86rem; margin-bottom: .35rem; }
+    article.event p { margin: 0; }
+    .tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .65rem; }
+    .tag {
+      font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--sky); padding: .15rem .4rem;
+    }
+    .two { display: grid; gap: .7rem; }
+    .note { color: var(--muted); }
+    label { display: block; font-size: .8rem; font-weight: 650; margin: .7rem 0 .22rem; }
+    input, textarea, select {
+      width: 100%; padding: .6rem .7rem;
+      border: 1px solid var(--line); border-radius: 4px;
+      font: inherit; background: var(--bg); color: var(--ink);
+    }
+    textarea { min-height: 90px; }
+    footer {
+      margin-top: 2.2rem; padding-top: .9rem;
+      border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem;
+    }
+    .wordmark {
+      display: inline-flex;
+      align-items: baseline;
+      gap: .4rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: .72rem;
+    }
+    .wordmark i {
+      font-style: normal;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 1px;
+    }
+    .hero .wordmark { color: var(--navy); margin-bottom: .35rem; }
+    footer .wordmark { display: flex; margin-bottom: .45rem; color: var(--navy); }
+    .joke-toast {
+      position: fixed; left: 50%; bottom: 1rem; z-index: 40;
+      transform: translateX(-50%) translateY(120%);
+      max-width: min(92vw, 400px);
+      background: var(--card); color: var(--ink);
+      border: 1px solid var(--line); box-shadow: var(--shadow);
+      padding: .8rem .95rem; font-size: .94rem; opacity: 0;
+      transition: .25s ease;
+    }
+    .joke-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .joke-toast b {
+      display: block; font-size: .68rem; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: .2rem;
+    }
+    .hidden { display: none !important; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero, .banner, section, footer { animation: none; }
+      .banner-track { animation: none; }
+    }
+    .tools { display: flex; align-items: center; }
+    @media (max-width: 640px) {
+      nav a { padding: .4rem .4rem; font-size: .8rem; }
+      .share { padding: .35rem .45rem; }
+      .share span { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <div class="bar-inner">
+      <header class="top">
+        <button class="brand" type="button" id="logoBtn" aria-label="Open Circle. Tap for a dad joke.">
+          <span class="brand-open">Open</span>
+          <span class="brand-circle">Circle</span>
+        </button>
+        <div class="tools">
+          <nav>
+            <a href="#upcoming">Upcoming</a>
+            <a href="#initiatives">Initiatives</a>
+            <a href="#contact">Contact</a>
+            <a href="#support">Support</a>
+            <a href="https://www.paypal.com/donate?hosted_button_id=M9SDJQ84DYRRW" target="_blank" rel="noopener noreferrer">Donate</a>
+          </nav>
+          <a class="share" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftheresearch4u-star.github.io%2FOC%2F" target="_blank" rel="noopener noreferrer" aria-label="Share Open Circle on Facebook">
+            <b>f</b> <span>Share</span>
+          </a>
+          <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle dark mode"></button>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="eyebrow">Logan · Beenleigh · Queensland</div>
+      <h1>What’s on for men</h1>
+      <p class="lede">Built from KENG’s 2026 Men’s Health Calendar, plus other local hubs. Mate-to-mate. Checked before it goes up. Ring the venue before you head out.</p>
+      <div class="live-bar" aria-live="polite">
+        <div>AEST <time id="liveClock">—</time></div>
+        <div>Board visits <strong id="visitCount">—</strong></div>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://www.paypal.com/donate?hosted_button_id=M9SDJQ84DYRRW" target="_blank" rel="noopener noreferrer">Donate now</a>
+        <a class="btn btn-ghost" href="#support">Find support</a>
+      </div>
+    </div>
+
+    <div class="banner" aria-label="What’s of interest">
+      <div class="banner-track">
+        <span><strong>Father’s Day</strong> Sun 6 Sep</span>
+        <span><strong>World Suicide Prevention Day</strong> Thu 10 Sep</span>
+        <span><strong>Dad’s Time</strong> Saturdays · KENG Meakin</span>
+        <span><strong>Man Up</strong> Tue 6.30pm · Beenleigh McDonald’s</span>
+        <span><strong>Great Mates</strong> Fri 9.30am · Meakin Park</span>
+        <span><strong>Libraries</strong> Men’s Conversation Collective</span>
+        <span><strong>Father’s Day</strong> Sun 6 Sep</span>
+        <span><strong>R U OK? Day</strong> Thu 10 Sep</span>
+        <span><strong>World Suicide Prevention Day</strong> 10 Sep</span>
+        <span><strong>International Men’s Day</strong> 19 Nov</span>
+        <span><strong>Great Mates Meet</strong> Fridays · KENG</span>
+      </div>
+    </div>
+
+    <section id="upcoming">
+      <h2>Upcoming</h2>
+      <p class="filter-label">Type</p>
+      <div class="filters" id="typeFilters">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="free">Free</button>
+        <button class="chip" data-filter="bookings">Bookings essential</button>
+        <button class="chip" data-filter="music">Music</button>
+        <button class="chip" data-filter="arts">Arts</button>
+        <button class="chip" data-filter="leisure">Leisure</button>
+        <button class="chip" data-filter="support">Charity / support</button>
+      </div>
+      <p class="filter-label">Where</p>
+      <div class="filters" id="placeFilters">
+        <button class="chip active" data-place="all">All places</button>
+        <button class="chip" data-place="local">Local</button>
+        <button class="chip" data-place="state">Queensland</button>
+        <button class="chip" data-place="national">National</button>
+        <button class="chip" data-place="global">Global</button>
+      </div>
+      <div class="grid" id="events">
+        <article class="event" data-tags="free support" data-place="national">
+          <h3>Father’s Day</h3>
+          <div class="meta">Sunday 6 September 2026 · Australia</div>
+          <p>First Sunday in September. A good week to check in on dads and the men who show up for kids. KENG Fathers Support is local if someone needs more than a barbecue.</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="national">
+          <h3>R U OK? Day</h3>
+          <div class="meta">Thursday 10 September 2026 · National</div>
+          <p>Same day as World Suicide Prevention Day this year. Ask, listen, don’t rush to fix. ruok.org.au</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="global">
+          <h3>International Men’s Day</h3>
+          <div class="meta">Wednesday 19 November 2026</div>
+          <p>Positive male role models and men’s health. A natural day for sheds, tables and clubs to open the door.</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="national">
+          <h3>Men’s Health Week</h3>
+          <div class="meta">15–21 June 2026 · next June 2027</div>
+          <p>Australia’s week for men’s physical and mental health. Lock local events in early for next year. amhf.org.au</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
+          <h3>KENG — Great Mates Meet</h3>
+          <div class="meta">Fri 9.30–11.30am Meakin Park · 1st &amp; 3rd Tue 9.30–11.30am Tudor Park · 07 3808 1684</div>
+          <p>Coffee, BBQ and a yarn. Further support on site if needed — emergency relief and counselling. No fee, no booking. From the KENG 2026 calendar.</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
+          <h3>KENG — Dad’s Time</h3>
+          <div class="meta">Saturdays in school term · 9.30–11.30am · 177 Meakin Rd, Slacks Creek</div>
+          <p>Dads bring the kids for play, activities and morning tea. Room to talk fathering and the week. No fee, no booking.</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
+          <h3>KENG — Midweek Men’s Circle</h3>
+          <div class="meta">2nd &amp; 4th Wednesday · 5.30–7.30pm · 177 Meakin Rd, Slacks Creek</div>
+          <p>After-work dinner and a check-in so it doesn’t all go home with you. No fee, no booking.</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
+          <h3>Man Up — Champion Change</h3>
+          <div class="meta">Every Tuesday · 6.30pm · McDonald’s, 38 Zander St, Beenleigh · 1800 462 687</div>
+          <p>Addiction, relationships, mental health — straight talk without taking itself too seriously. No fee, no booking. Facebook: Man Up Australia.</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
+          <h3>Flagstone Blokes</h3>
+          <div class="meta">Thursday 10am–12pm · 232 Homestead Dr, Flagstone</div>
+          <p>Snacks, yarns, next outing. First visit free, then $5 to cover food. flagstoneblokes.com.au · info@flagstoneblokes.com.au</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
+          <h3>Meeting with Mates — Twin Rivers</h3>
+          <div class="meta">Tuesday 9–11am · 104 River Hills Rd, Eagleby · 07 3382 4000</div>
+          <p>Cafe catch-up. Coffee and food to buy. Connect groups, counselling and emergency relief on the same site. No fee to sit with the blokes.</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="local">
+          <h3>ManKind Project — Logan Village Circle</h3>
+          <div class="meta">Every 2nd Tuesday · 7–10pm · 24/32 Wharf St, Logan Village · 1300 657 753</div>
+          <p>$10, first night free. No booking. mkpqld.org.au</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free support bookings" data-place="local">
+          <h3>YFS — Young Dad’s Squad</h3>
+          <div class="meta">Thursday 5–7.30pm school term · dads 25 and under · 376 Kingston Rd, Slacks Creek · 07 3826 1500</div>
+          <p>Gaming, golf, fishing, bowling, pickleball. Free. Book via YFS. yfs.org.au</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Bookings essential</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
+          <h3>ATSICHS Logan Men’s Group</h3>
+          <div class="meta">Friday 10am–12pm · Hawks Football Club, Eddy Ave, Edens Landing · 0455 465 994</div>
+          <p>Yarn and men’s business. Aboriginal and Torres Strait Islander led; others welcome if they sit right with the room. Walking groups and outings as well.</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="local">
+          <h3>Wheelnutz Garage &amp; Torque It Out</h3>
+          <div class="meta">Unit 7, 33–43 Meakin Rd, Meadowbrook · 07 3416 0854</div>
+          <p>Hands-on car work, skills and mateship. Torque It Out is free outreach for men 25–49 in the suicide-prevention space. Times by arrangement. wheelnutzgarage.com</p>
+          <div class="tags"><span class="tag">Support</span><span class="tag">Leisure</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
+          <h3>Logan Libraries — Men’s Conversation Collective</h3>
+          <div class="meta">Tue 10am–12pm Logan North Library · also Friday morning Hyperdome · 07 3541 6100</div>
+          <p>Coffee and a chat. Free, no booking. loglib.org/mcc</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="leisure" data-place="local">
+          <h3>Beenleigh District Men’s Shed</h3>
+          <div class="meta">Mon, Tue, Thu, Fri · 8.00–11.30am · 36 Martens St, Beenleigh</div>
+          <p>Hands-on work and company. Call the shed before your first visit.</p>
+          <div class="tags"><span class="tag">Leisure</span></div>
+        </article>
+        <article class="event" data-tags="support bookings" data-place="local">
+          <h3>The Men’s Table — Logan</h3>
+          <div class="meta">1st Tuesday and 3rd Wednesday each month · 1800 636 782</div>
+          <p>Two Logan tables. Start with an Entrée taster. Book first. Tables are free after that. themenstable.org</p>
+          <div class="tags"><span class="tag">Support</span><span class="tag">Bookings essential</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="local">
+          <h3>KENG Fathers Support</h3>
+          <div class="meta">Tue–Thu 9am–4.30pm, Fri 9am–2.30pm · Slacks Creek &amp; Loganholme</div>
+          <p>Hayden Esparon and the KENG team. Practical support for dads. 07 3808 1684.</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="leisure support" data-place="local">
+          <h3>Crestmead Community Centre</h3>
+          <div class="meta">Gimlet Street, Crestmead Community Park · 07 3805 4100</div>
+          <p>Hall, groups and local programs. Ask the centre what’s on this week for men and families.</p>
+          <div class="tags"><span class="tag">Leisure</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free support" data-place="local">
+          <h3>Beenleigh Neighbourhood Centre</h3>
+          <div class="meta">Mon–Fri 9am–4pm · 10–12 James Street, Beenleigh · 07 3287 2840</div>
+          <p>Walk-in community hub: information, groups, JP service most weekdays. beenleigh.org.au</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="leisure support" data-place="local">
+          <h3>Beenleigh RSL &amp; Golf Club</h3>
+          <div class="meta">13 Bardyn Halliday Drive, Mt Warren Park · 07 3287 4000</div>
+          <p>Local RSL. Diggers Day on alternating Thursdays from 11am. Veteran welfare by appointment.</p>
+          <div class="tags"><span class="tag">Leisure</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="leisure support" data-place="local">
+          <h3>Beenleigh Senior Citizens — Your Lifestyle Centre</h3>
+          <div class="meta">20 Alamein Street, Beenleigh · 07 3287 1477</div>
+          <p>Social programs, meals and healthy ageing for over-50s. Call for the current timetable. ylc.org.au</p>
+          <div class="tags"><span class="tag">Leisure</span><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="free leisure support" data-place="local">
+          <h3>KENG Loganholme — Healthy Ageing Hub</h3>
+          <div class="meta">Tudor Park Centre, 71–78 Clarks Road, Loganholme</div>
+          <p>Guest talks, games, walking group and classes. Free. Ask KENG for the week’s times. 07 3808 1684</p>
+          <div class="tags"><span class="tag">Free</span><span class="tag">Leisure</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="local">
+          <h3>Logan &amp; Albert Vietnam Veterans</h3>
+          <div class="meta">Logan / Woodridge · 07 3803 6240</div>
+          <p>Vietnam Veterans Association of Australia, Logan &amp; Albert. Call before visiting. Beenleigh RSL can also point veterans to local advocacy.</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+        <article class="event" data-tags="support" data-place="local">
+          <h3>Aboriginal and Torres Strait Islander support</h3>
+          <div class="meta">Beenleigh and Logan</div>
+          <p>Beenleigh Housing Development Company — 9 Main Street, Beenleigh · 07 3807 0901. ATSICHS Logan Medical Clinic. Logan District Elders · 07 3803 7294.</p>
+          <div class="tags"><span class="tag">Support</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="initiatives">
+      <h2>Initiatives</h2>
+      <p class="note">Campaigns and national work. Weekly groups stay in Upcoming.</p>
+      <div class="init-grid">
+        <div class="box">
+          <h3>Movember</h3>
+          <p>Mental health, suicide prevention, prostate and testicular cancer. September is Prostate Cancer Awareness Month — talk to a GP about a blood test from 50, or 45 if you are higher risk.</p>
+          <p><a href="https://au.movember.com/" target="_blank" rel="noopener">au.movember.com</a></p>
+        </div>
+        <div class="box">
+          <h3>WellMen</h3>
+          <p>New $3 million centre (Sept 2026) at Flinders University with Movember, The Man Cave and Deadly Male. Building programs where blokes already are — school, club, online.</p>
+          <p><a href="https://www.health.gov.au/topics/mens-health/what-were-doing" target="_blank" rel="noopener">health.gov.au men’s health</a></p>
+        </div>
+        <div class="box">
+          <h3>AMHF &amp; Men’s Health Week</h3>
+          <p>Peak body for the sector. Men’s Health Week 2026 ran 15–21 June. International Men’s Day is 19 November.</p>
+          <p><a href="https://www.amhf.org.au/" target="_blank" rel="noopener">amhf.org.au</a></p>
+        </div>
+        <div class="box">
+          <h3>MensLine Australia</h3>
+          <p>24/7 phone and online support for men — relationships, family, the hard stuff. Not a substitute for 000.</p>
+          <p><strong>1300 78 99 78</strong> · <a href="https://mensline.org.au/" target="_blank" rel="noopener">mensline.org.au</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="new">
+      <h2>What’s new</h2>
+      <div class="box">
+        <p>KENG’s 2026 Men’s Health Calendar is now on the board: Man Up, Flagstone Blokes, Twin Rivers, ManKind Project, Young Dad’s Squad, ATSICHS men’s group, Wheelnutz / Torque It Out, The Men’s Table, Logan Libraries, plus KENG Great Mates, Dad’s Time and Midweek Circle.</p>
+        <p class="note">Calendar by Hayden Esparon and KENG, with the groups named in it. Times can move — ring before you go.</p>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact us</h2>
+      <p class="note">Event listings, a message, or the weekly email. Nothing is published until it is checked.</p>
+      <form class="card" action="mailto:theresearch4u@gmail.com?subject=Open%20Circle%20contact" method="post" enctype="text/plain">
+        <label for="reason">What is this about</label>
+        <select id="reason" name="Reason">
+          <option>List an event</option>
+          <option>Message the group</option>
+          <option>Opt in to what’s on</option>
+          <option>Something else</option>
+        </select>
+        <label for="org">Organisation (if listing)</label>
+        <input id="org" name="Organisation" placeholder="e.g. Beenleigh District Men’s Shed" />
+        <label for="title">Event or subject</label>
+        <input id="title" name="Subject" required />
+        <label for="when">When</label>
+        <input id="when" name="When" placeholder="Day, time, or date" />
+        <label for="where">Where</label>
+        <input id="where" name="Where" />
+        <label for="type">Type</label>
+        <select id="type" name="Type">
+          <option>Free</option>
+          <option>Bookings essential</option>
+          <option>Music</option>
+          <option>Arts</option>
+          <option>Leisure</option>
+          <option>Charity / support</option>
+          <option>Not an event</option>
+        </select>
+        <label for="reach">Reach</label>
+        <select id="reach" name="Reach">
+          <option>Local (Logan / Beenleigh)</option>
+          <option>Queensland</option>
+          <option>National</option>
+          <option>Global</option>
+        </select>
+        <label for="about">Message</label>
+        <textarea id="about" name="Message" required></textarea>
+        <label for="from">Your email</label>
+        <input id="from" name="From" required type="email" />
+        <p style="margin:1rem 0 0"><button class="btn btn-primary" type="submit">Send</button></p>
+      </form>
+    </section>
+
+    <section id="support">
+      <h2>Look up support</h2>
+      <div class="two">
+        <div class="box">
+          <h3>If it is urgent</h3>
+          <p>Call <strong>000</strong> if someone is in immediate danger.</p>
+          <p>Lifeline <strong>13 11 14</strong><br />Suicide Call Back Service <strong>1300 659 467</strong><br />MensLine Australia <strong>1300 78 99 78</strong></p>
+        </div>
+        <div class="box">
+          <h3>Local</h3>
+          <p><strong>KENG</strong> — 07 3808 1684 · keng.org.au<br />
+          <strong>Logan City Council</strong> — men’s programs on logan.qld.gov.au</p>
+          <p class="note">This site lists community events. It is not a crisis service.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="donate">
+      <h2>Donate now</h2>
+      <div class="box">
+        <p>If you’d like to chip in, even the cost of a coffee makes a difference. Support helps keep turning compassion into action.</p>
+        <p><a class="btn btn-primary" href="https://www.paypal.com/donate?hosted_button_id=M9SDJQ84DYRRW" target="_blank" rel="noopener noreferrer">Donate with PayPal</a></p>
+        <p class="note">PayPal donate button. Thank you for believing in community.</p>
+      </div>
+    </section>
+
+    <section id="disclaimer">
+      <h2>Mate to mate</h2>
+      <div class="box">
+        <p>This board is blokes pointing other blokes to what’s on. It is not a doctor, a counsellor, or a crisis line.</p>
+        <p>Listings are checked before they go up, but times change. Ring the venue before you drive over.</p>
+        <p>If you or a mate is doing it tough, say something. Stay for a yarn. If it is heavier than that: <strong>Lifeline 13 11 14</strong> · <strong>MensLine 1300 78 99 78</strong> · <strong>000</strong> if someone is in danger.</p>
+        <p class="note">You are welcome here whether you talk a lot or sit quiet with a cuppa.</p>
+      </div>
+    </section>
+
+    <footer>
+      Mate to mate community noticeboard. Listings validated before they appear. Tap OPEN CIRCLE up top for a dad joke.
+    </footer>
+  </div>
+  <div class="joke-toast" id="jokeToast" role="status"></div>
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById("themeToggle");
+    const saved = localStorage.getItem("oc-theme");
+    const preferDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const start = saved || (preferDark ? "dark" : "light");
+    root.setAttribute("data-theme", start);
+    toggle.addEventListener("click", () => {
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("oc-theme", next);
+    });
+
+    const cards = document.querySelectorAll(".event");
+    let typeFilter = "all";
+    let placeFilter = "all";
+    function applyFilters() {
+      cards.forEach((card) => {
+        const tags = card.dataset.tags || "";
+        const place = card.dataset.place || "";
+        const typeOk = typeFilter === "all" || tags.includes(typeFilter);
+        const placeOk = placeFilter === "all" || place === placeFilter;
+        card.classList.toggle("hidden", !(typeOk && placeOk));
+      });
+    }
+    document.querySelectorAll("#typeFilters .chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll("#typeFilters .chip").forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+        typeFilter = chip.dataset.filter;
+        applyFilters();
+      });
+    });
+    document.querySelectorAll("#placeFilters .chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll("#placeFilters .chip").forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+        placeFilter = chip.dataset.place;
+        applyFilters();
+      });
+    });
+
+    const jokes = [
+      "I’m reading a book on anti-gravity. It’s impossible to put down.",
+      "I only know 25 letters of the alphabet. I don’t know y.",
+      "Why don’t eggs tell jokes? They’d crack each other up.",
+      "I used to hate facial hair. Then it grew on me.",
+      "What do you call a fake noodle? An impasta.",
+      "Why did the scarecrow win an award? He was outstanding in his field.",
+      "What’s brown and sticky? A stick.",
+      "I would tell you a construction joke, but I’m still working on it.",
+      "Why can’t your nose be 12 inches long? Because then it would be a foot.",
+      "I burned 2,000 calories today. I left the pizza in the oven.",
+      "The rotation of Earth really makes my day.",
+      "What do you call a man with a rubber toe? Roberto."
+    ];
+    const toast = document.getElementById("jokeToast");
+    const logoBtn = document.getElementById("logoBtn");
+    let lastJoke = -1;
+    const clockEl = document.getElementById("liveClock");
+    function tickClock() {
+      clockEl.textContent = new Date().toLocaleString("en-AU", {
+        timeZone: "Australia/Brisbane",
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      });
+    }
+    tickClock();
+    setInterval(tickClock, 1000);
+
+    const visitEl = document.getElementById("visitCount");
+    const visitKey = "oc-visit-day";
+    const todayAest = new Date().toLocaleDateString("en-CA", { timeZone: "Australia/Brisbane" });
+    const firstToday = localStorage.getItem(visitKey) !== todayAest;
+    async function loadVisits() {
+      const endpoints = firstToday
+        ? [
+            "https://api.counterapi.dev/v1/opencircle/board/up",
+            "https://api.countapi.xyz/hit/opencircle.oc/visits"
+          ]
+        : [
+            "https://api.counterapi.dev/v1/opencircle/board/",
+            "https://api.countapi.xyz/get/opencircle.oc/visits"
+          ];
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url);
+          if (!res.ok) continue;
+          const data = await res.json();
+          const n = data.count ?? data.value;
+          if (typeof n === "number") {
+            visitEl.textContent = n.toLocaleString("en-AU");
+            if (firstToday) localStorage.setItem(visitKey, todayAest);
+            return;
+          }
+        } catch (err) { /* try next */ }
+      }
+      let n = Number(localStorage.getItem("oc-local-visits") || "0");
+      if (firstToday) {
+        n += 1;
+        localStorage.setItem("oc-local-visits", String(n));
+        localStorage.setItem(visitKey, todayAest);
+      }
+      visitEl.textContent = n.toLocaleString("en-AU");
+    }
+    loadVisits();
+
+    logoBtn.addEventListener("click", () => {
+      let i = Math.floor(Math.random() * jokes.length);
+      if (i === lastJoke) i = (i + 1) % jokes.length;
+      lastJoke = i;
+      toast.innerHTML = "<b>Dad joke</b>" + jokes[i];
+      toast.classList.add("show");
+      clearTimeout(window._jokeTimer);
+      window._jokeTimer = setTimeout(() => toast.classList.remove("show"), 4200);
+    });
+  </script>
+</body>
+</html>
