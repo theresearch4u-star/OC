@@ -65,7 +65,25 @@
       align-items: center;
       justify-content: space-between;
       gap: .6rem;
-      min-height: 58px;
+      min-height: 52px;
+    }
+    .subnav {
+      border-top: 1px solid rgba(255,255,255,.18);
+    }
+    .subnav-inner {
+      width: min(1040px, calc(100% - 1.5rem));
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .15rem .1rem;
+      padding: .35rem 0 .5rem;
+    }
+    .subnav a, .subnav .share {
+      color: inherit;
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 600;
+      padding: .35rem .55rem;
     }
     .brand {
       display: flex;
@@ -91,28 +109,12 @@
       padding-bottom: 1px;
       line-height: 1.1;
     }
-    nav { display: flex; align-items: center; gap: .1rem; }
-    nav a {
-      color: inherit;
-      text-decoration: none;
-      font-size: .88rem;
-      font-weight: 600;
-      padding: .45rem .55rem;
-      opacity: .9;
-    }
     .share {
       display: inline-flex;
       align-items: center;
       gap: .35rem;
-      color: inherit;
-      text-decoration: none;
-      font-size: .78rem;
-      font-weight: 650;
-      letter-spacing: .04em;
-      padding: .35rem .55rem;
       border: 1px solid rgba(255,255,255,.3);
       border-radius: 4px;
-      opacity: .95;
     }
     .share b {
       font-size: .8rem;
@@ -295,9 +297,8 @@
     }
     .tools { display: flex; align-items: center; }
     @media (max-width: 640px) {
-      nav a { padding: .4rem .4rem; font-size: .8rem; }
-      .share { padding: .35rem .45rem; }
       .share span { display: none; }
+      h1 { font-size: 1.55rem; }
     }
   </style>
 </head>
@@ -310,19 +311,21 @@
           <span class="brand-circle">Circle</span>
         </button>
         <div class="tools">
-          <nav>
-            <a href="#upcoming">Upcoming</a>
-            <a href="#initiatives">Initiatives</a>
-            <a href="#contact">Contact</a>
-            <a href="#support">Support</a>
-            <a href="https://www.paypal.com/donate?hosted_button_id=M9SDJQ84DYRRW" target="_blank" rel="noopener noreferrer">Donate</a>
-          </nav>
-          <a class="share" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftheresearch4u-star.github.io%2FOC%2F" target="_blank" rel="noopener noreferrer" aria-label="Share Open Circle on Facebook">
-            <b>f</b> <span>Share</span>
-          </a>
           <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle dark mode"></button>
         </div>
       </header>
+    </div>
+    <div class="subnav">
+      <div class="subnav-inner">
+        <a href="#upcoming">Upcoming</a>
+        <a href="#initiatives">Initiatives</a>
+        <a href="#contact">Contact</a>
+        <a href="#support">Support</a>
+        <a href="https://www.paypal.com/donate?hosted_button_id=M9SDJQ84DYRRW" target="_blank" rel="noopener noreferrer">Donate</a>
+        <a class="share" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftheresearch4u-star.github.io%2FOC%2F" target="_blank" rel="noopener noreferrer" aria-label="Share Open Circle on Facebook">
+          <b>f</b> <span>Share</span>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -720,7 +723,6 @@
         year: "numeric",
         hour: "2-digit",
         minute: "2-digit",
-        second: "2-digit",
         hour12: true
       });
     }
