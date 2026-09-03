@@ -273,6 +273,27 @@
     }
     .two { display: grid; gap: .7rem; }
     .note { color: var(--muted); }
+    .stamps { display: flex; flex-wrap: wrap; gap: .4rem; margin: .7rem 0 .2rem; }
+    .stamp {
+      border: 1px solid var(--line);
+      background: var(--sky);
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 650;
+      padding: .28rem .55rem;
+      border-radius: 99px;
+    }
+    .stamp.on {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+    }
+    html[data-theme="dark"] .stamp.on { background: #1a6b99; border-color: #1a6b99; }
+    .challenge {
+      margin: .35rem 0 0;
+      font-size: .95rem;
+    }
+    .check-actions { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
     label { display: block; font-size: .8rem; font-weight: 650; margin: .7rem 0 .22rem; }
     input, textarea, select {
       width: 100%; padding: .6rem .7rem;
@@ -342,6 +363,8 @@
     <div class="subnav">
       <div class="subnav-inner">
         <a href="#upcoming">Upcoming</a>
+        <a href="#ideas">Add yours</a>
+        <a href="#checkin">This week</a>
         <a href="#initiatives">Initiatives</a>
         <a href="#contact">Contact</a>
         <a href="#support">Support</a>
@@ -362,7 +385,7 @@
         <div>AEST <time id="liveClock">—</time></div>
       </div>
       <div class="actions">
-        <a class="btn btn-primary" href="https://www.paypal.com/donate?hosted_button_id=M9SDJQ84DYRRW" target="_blank" rel="noopener noreferrer">Donate now</a>
+        <a class="btn btn-primary" href="#ideas">Add an idea</a>
         <a class="btn btn-ghost" href="#support">Find support</a>
       </div>
     </div>
@@ -385,6 +408,33 @@
         <a href="https://mensline.org.au/" target="_blank" rel="noopener"><strong>MensLine</strong> 1300 78 99 78 — talk it through</a>
       </div>
     </div>
+
+    <section id="checkin">
+      <h2>This week</h2>
+      <div class="box">
+        <p class="challenge" id="weekChallenge">Loading this week’s nudge…</p>
+        <p class="note">Your phone only. No names, no scoreboard.</p>
+        <p>Board streak: <strong id="streakCount">0</strong> day<span id="streakPlural">s</span></p>
+        <div class="stamps" id="stamps"></div>
+        <div class="check-actions">
+          <button class="btn btn-ghost" type="button" id="didChallenge">I did this week’s one</button>
+          <a class="btn btn-primary" href="#ideas">Send an idea</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="ideas">
+      <h2>Got something to add?</h2>
+      <p class="note">A group, a night, or a half-formed idea. One or two lines is enough. Nothing goes live until it is checked.</p>
+      <form class="card" action="mailto:theresearch4u@gmail.com?subject=Open%20Circle%20idea" method="post" enctype="text/plain">
+        <label for="idea">Your idea</label>
+        <textarea id="idea" name="Idea" required placeholder="e.g. Thursday night walk from Beenleigh station, or a dads’ breakfast at the RSL"></textarea>
+        <label for="idea-from">Your email</label>
+        <input id="idea-from" name="From" type="email" required placeholder="So we can come back to you" />
+        <p style="margin:1rem 0 0"><button class="btn btn-primary" type="submit">Send the idea</button></p>
+        <p class="note">Opens your email app. If that fails, write to theresearch4u@gmail.com</p>
+      </form>
+    </section>
 
     <section id="upcoming">
       <h2>Upcoming</h2>
@@ -601,6 +651,7 @@
       <form class="card" action="mailto:theresearch4u@gmail.com?subject=Open%20Circle%20contact" method="post" enctype="text/plain">
         <label for="reason">What is this about</label>
         <select id="reason" name="Reason">
+          <option>I’ve got an idea</option>
           <option>List an event</option>
           <option>Message the group</option>
           <option>Opt in to what’s on</option>
@@ -809,6 +860,59 @@
     }
     tickClock();
     setInterval(tickClock, 1000);
+
+    const challenges = [
+      "Text one mate you have not heard from in a while. No speech. Just ‘how are you going?’",
+      "Show up to one listing this week, even if you only stay for a cuppa.",
+      "Ask a bloke at work or the club what he’s got on this weekend.",
+      "Send Open Circle one idea — a group, a night, or a gap you can see.",
+      "If you are a dad, put one phone-free hour with the kids in the diary.",
+      "Walk with someone. Twenty minutes is enough.",
+      "Write down one thing that went alright this week. Keep it in your pocket."
+    ];
+    const weekNo = Math.floor(Date.now() / 86400000 / 7);
+    const challengeEl = document.getElementById("weekChallenge");
+    challengeEl.textContent = challenges[weekNo % challenges.length];
+
+    const stampMeta = [
+      { id: "board", label: "Opened the board" },
+      { id: "read", label: "Read an article" },
+      { id: "idea", label: "Sent an idea" },
+      { id: "week", label: "Did this week’s one" },
+      { id: "share", label: "Passed it on" }
+    ];
+    const today = new Date().toLocaleDateString("en-CA", { timeZone: "Australia/Brisbane" });
+    const state = JSON.parse(localStorage.getItem("oc-checkin") || "{}");
+    if (state.last !== today) {
+      const yest = new Date(Date.now() - 86400000).toLocaleDateString("en-CA", { timeZone: "Australia/Brisbane" });
+      state.streak = state.last === yest ? (state.streak || 0) + 1 : 1;
+      state.last = today;
+      state.board = true;
+      localStorage.setItem("oc-checkin", JSON.stringify(state));
+    }
+    function saveState() {
+      localStorage.setItem("oc-checkin", JSON.stringify(state));
+      renderStamps();
+    }
+    function renderStamps() {
+      document.getElementById("streakCount").textContent = state.streak || 1;
+      document.getElementById("streakPlural").textContent = (state.streak || 1) === 1 ? "" : "s";
+      document.getElementById("stamps").innerHTML = stampMeta.map((s) =>
+        "<span class=\"stamp" + (state[s.id] ? " on" : "") + "\">" + s.label + "</span>"
+      ).join("");
+    }
+    renderStamps();
+    document.getElementById("didChallenge").addEventListener("click", () => {
+      state.week = true;
+      saveState();
+    });
+    document.querySelectorAll(".banner-track a").forEach((a) => {
+      a.addEventListener("click", () => { state.read = true; saveState(); });
+    });
+    document.querySelector(".share")?.addEventListener("click", () => { state.share = true; saveState(); });
+    document.querySelectorAll("form").forEach((form) => {
+      form.addEventListener("submit", () => { state.idea = true; saveState(); });
+    });
 
     logoBtn.addEventListener("click", () => {
       let i = Math.floor(Math.random() * jokes.length);
