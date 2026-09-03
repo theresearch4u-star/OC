@@ -207,7 +207,31 @@
       padding: .55rem 0; font-size: .88rem;
     }
     .banner-track strong { color: var(--accent); }
-    .banner-track span { padding: 0 .8rem; white-space: nowrap; }
+    .banner-track a {
+      color: inherit;
+      text-decoration: none;
+      padding: 0 .9rem;
+      white-space: nowrap;
+    }
+    .banner-track a:hover { text-decoration: underline; }
+    .flags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      align-items: center;
+      margin: 0 0 .7rem;
+    }
+    .flags svg, .flags img {
+      width: 36px;
+      height: 24px;
+      border-radius: 2px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.12);
+    }
+    .ack {
+      font-size: .9rem;
+      color: var(--muted);
+      max-width: 46rem;
+    }
     @keyframes scroll { to { transform: translateX(-50%); } }
     section { margin: 1.7rem 0; }
     section h2 { margin: 0 0 .7rem; font-size: 1.25rem; }
@@ -336,7 +360,6 @@
       <p class="lede">Built from KENG’s 2026 Men’s Health Calendar, plus other local hubs. Mate-to-mate. Checked before it goes up. Ring the venue before you head out.</p>
       <div class="live-bar" aria-live="polite">
         <div>AEST <time id="liveClock">—</time></div>
-        <div>Board visits <strong id="visitCount">—</strong></div>
       </div>
       <div class="actions">
         <a class="btn btn-primary" href="https://www.paypal.com/donate?hosted_button_id=M9SDJQ84DYRRW" target="_blank" rel="noopener noreferrer">Donate now</a>
@@ -344,19 +367,22 @@
       </div>
     </div>
 
-    <div class="banner" aria-label="What’s of interest">
+    <div class="banner" aria-label="Men’s health reading">
       <div class="banner-track">
-        <span><strong>Father’s Day</strong> Sun 6 Sep</span>
-        <span><strong>World Suicide Prevention Day</strong> Thu 10 Sep</span>
-        <span><strong>Dad’s Time</strong> Saturdays · KENG Meakin</span>
-        <span><strong>Man Up</strong> Tue 6.30pm · Beenleigh McDonald’s</span>
-        <span><strong>Great Mates</strong> Fri 9.30am · Meakin Park</span>
-        <span><strong>Libraries</strong> Men’s Conversation Collective</span>
-        <span><strong>Father’s Day</strong> Sun 6 Sep</span>
-        <span><strong>R U OK? Day</strong> Thu 10 Sep</span>
-        <span><strong>World Suicide Prevention Day</strong> 10 Sep</span>
-        <span><strong>International Men’s Day</strong> 19 Nov</span>
-        <span><strong>Great Mates Meet</strong> Fridays · KENG</span>
+        <a href="https://www.amhf.org.au/what_s_on_in_men_s_health_for_2026" target="_blank" rel="noopener"><strong>AMHF</strong> What’s on in men’s health 2026</a>
+        <a href="https://au.movember.com/story/more-than-a-provider" target="_blank" rel="noopener"><strong>Movember</strong> More Than a Provider — dads’ health</a>
+        <a href="https://www.health.gov.au/ministers/the-hon-dan-repacholi-mp/media/three-in-five-aussie-dads-not-asked-about-their-mental-health-during-early-fatherhood" target="_blank" rel="noopener"><strong>Dads</strong> 3 in 5 not asked about mental health</a>
+        <a href="https://www.health.gov.au/ministers/the-hon-dan-repacholi-mp/media/3-million-boost-to-support-mens-health" target="_blank" rel="noopener"><strong>WellMen</strong> $3m centre for boys and men</a>
+        <a href="https://au.movember.com/" target="_blank" rel="noopener"><strong>Movember</strong> Prostate month — start with a blood test</a>
+        <a href="https://www.health.gov.au/topics/mens-health/what-were-doing" target="_blank" rel="noopener"><strong>Gov</strong> National Men’s Health Strategy</a>
+        <a href="https://mensline.org.au/" target="_blank" rel="noopener"><strong>MensLine</strong> 1300 78 99 78 — talk it through</a>
+        <a href="https://www.amhf.org.au/what_s_on_in_men_s_health_for_2026" target="_blank" rel="noopener"><strong>AMHF</strong> What’s on in men’s health 2026</a>
+        <a href="https://au.movember.com/story/more-than-a-provider" target="_blank" rel="noopener"><strong>Movember</strong> More Than a Provider — dads’ health</a>
+        <a href="https://www.health.gov.au/ministers/the-hon-dan-repacholi-mp/media/three-in-five-aussie-dads-not-asked-about-their-mental-health-during-early-fatherhood" target="_blank" rel="noopener"><strong>Dads</strong> 3 in 5 not asked about mental health</a>
+        <a href="https://www.health.gov.au/ministers/the-hon-dan-repacholi-mp/media/3-million-boost-to-support-mens-health" target="_blank" rel="noopener"><strong>WellMen</strong> $3m centre for boys and men</a>
+        <a href="https://au.movember.com/" target="_blank" rel="noopener"><strong>Movember</strong> Prostate month — start with a blood test</a>
+        <a href="https://www.health.gov.au/topics/mens-health/what-were-doing" target="_blank" rel="noopener"><strong>Gov</strong> National Men’s Health Strategy</a>
+        <a href="https://mensline.org.au/" target="_blank" rel="noopener"><strong>MensLine</strong> 1300 78 99 78 — talk it through</a>
       </div>
     </div>
 
@@ -650,7 +676,62 @@
     </section>
 
     <footer>
-      Mate to mate community noticeboard. Listings validated before they appear. Tap OPEN CIRCLE up top for a dad joke.
+      <div class="flags" aria-label="Flags of Queensland, Australia, Aboriginal and Torres Strait Islander peoples">
+        <svg viewBox="0 0 36 24" role="img" aria-label="Queensland"><title>Queensland</title>
+          <rect width="36" height="24" fill="#6da9d2"/>
+          <rect width="16" height="12" fill="#012169"/>
+          <polygon points="0,0 16,0 8,6" fill="#fff"/>
+          <polygon points="0,12 16,12 8,6" fill="#fff"/>
+          <polygon points="0,0 0,12 8,6" fill="#fff"/>
+          <polygon points="16,0 16,12 8,6" fill="#fff"/>
+          <polygon points="2,0 14,0 8,4.5" fill="#c8102e"/>
+          <polygon points="2,12 14,12 8,7.5" fill="#c8102e"/>
+          <polygon points="0,2 0,10 6,6" fill="#c8102e"/>
+          <polygon points="16,2 16,10 10,6" fill="#c8102e"/>
+          <rect x="6.6" y="0" width="2.8" height="12" fill="#fff"/>
+          <rect x="0" y="4.6" width="16" height="2.8" fill="#fff"/>
+          <rect x="7.1" y="0" width="1.8" height="12" fill="#c8102e"/>
+          <rect x="0" y="5.1" width="16" height="1.8" fill="#c8102e"/>
+          <circle cx="27" cy="13" r="5.2" fill="#fff" stroke="#c8102e" stroke-width=".7"/>
+          <text x="27" y="15.2" text-anchor="middle" font-size="6" font-family="Georgia,serif" fill="#c8102e">Q</text>
+        </svg>
+        <svg viewBox="0 0 36 24" role="img" aria-label="Australia"><title>Australia</title>
+          <rect width="36" height="24" fill="#012169"/>
+          <rect width="16" height="12" fill="#012169"/>
+          <polygon points="0,0 16,0 8,6" fill="#fff"/>
+          <polygon points="0,12 16,12 8,6" fill="#fff"/>
+          <polygon points="0,0 0,12 8,6" fill="#fff"/>
+          <polygon points="16,0 16,12 8,6" fill="#fff"/>
+          <polygon points="2,0 14,0 8,4.5" fill="#c8102e"/>
+          <polygon points="2,12 14,12 8,7.5" fill="#c8102e"/>
+          <polygon points="0,2 0,10 6,6" fill="#c8102e"/>
+          <polygon points="16,2 16,10 10,6" fill="#c8102e"/>
+          <rect x="6.6" y="0" width="2.8" height="12" fill="#fff"/>
+          <rect x="0" y="4.6" width="16" height="2.8" fill="#fff"/>
+          <rect x="7.1" y="0" width="1.8" height="12" fill="#c8102e"/>
+          <rect x="0" y="5.1" width="16" height="1.8" fill="#c8102e"/>
+          <polygon points="25,4 25.6,5.7 27.4,5.7 25.95,6.75 26.5,8.5 25,7.4 23.5,8.5 24.05,6.75 22.6,5.7 24.4,5.7" fill="#fff"/>
+          <polygon points="31,8 31.4,9.2 32.7,9.2 31.65,9.95 32.05,11.2 31,10.4 29.95,11.2 30.35,9.95 29.3,9.2 30.6,9.2" fill="#fff"/>
+          <polygon points="29,13 29.4,14.2 30.7,14.2 29.65,14.95 30.05,16.2 29,15.4 27.95,16.2 28.35,14.95 27.3,14.2 28.6,14.2" fill="#fff"/>
+          <polygon points="22,14 22.4,15.2 23.7,15.2 22.65,15.95 23.05,17.2 22,16.4 20.95,17.2 21.35,15.95 20.3,15.2 21.6,15.2" fill="#fff"/>
+          <polygon points="26,18 26.35,19.05 27.5,19.05 26.6,19.7 26.95,20.8 26,20.1 25.05,20.8 25.4,19.7 24.5,19.05 25.65,19.05" fill="#fff"/>
+        </svg>
+        <svg viewBox="0 0 36 24" role="img" aria-label="Aboriginal flag"><title>Aboriginal flag</title>
+          <rect width="36" height="12" fill="#000"/>
+          <rect y="12" width="36" height="12" fill="#C00"/>
+          <circle cx="18" cy="12" r="5.2" fill="#FFD100"/>
+        </svg>
+        <svg viewBox="0 0 36 24" role="img" aria-label="Torres Strait Islander flag"><title>Torres Strait Islander flag</title>
+          <rect width="36" height="24" fill="#00A54F"/>
+          <rect y="6" width="36" height="12" fill="#004C97"/>
+          <rect y="5.4" width="36" height="1.2" fill="#fff"/>
+          <rect y="17.4" width="36" height="1.2" fill="#fff"/>
+          <polygon points="18,7.4 20.2,13.2 26.4,13.2 21.4,16.6 23.4,22.2 18,18.6 12.6,22.2 14.6,16.6 9.6,13.2 15.8,13.2" fill="#fff"/>
+          <polygon points="18,9.6 19.4,13.4 23.4,13.4 20.2,15.6 21.4,19.2 18,17 14.6,19.2 15.8,15.6 12.6,13.4 16.6,13.4" fill="#000"/>
+        </svg>
+      </div>
+      <p class="ack">Open Circle acknowledges the Traditional Custodians of the lands on which we gather across Logan and Beenleigh, including the Yugambeh and Yuggera peoples, and pay our respects to Elders past and present. We acknowledge Aboriginal and Torres Strait Islander peoples as the First Nations of this country, and recognise their continuing connection to land, waters and community.</p>
+      <p>Mate to mate community noticeboard. Listings validated before they appear. Tap OPEN CIRCLE up top for a dad joke.</p>
     </footer>
   </div>
   <div class="joke-toast" id="jokeToast" role="status"></div>
@@ -728,43 +809,6 @@
     }
     tickClock();
     setInterval(tickClock, 1000);
-
-    const visitEl = document.getElementById("visitCount");
-    const visitKey = "oc-visit-day";
-    const todayAest = new Date().toLocaleDateString("en-CA", { timeZone: "Australia/Brisbane" });
-    const firstToday = localStorage.getItem(visitKey) !== todayAest;
-    async function loadVisits() {
-      const endpoints = firstToday
-        ? [
-            "https://api.counterapi.dev/v1/opencircle/board/up",
-            "https://api.countapi.xyz/hit/opencircle.oc/visits"
-          ]
-        : [
-            "https://api.counterapi.dev/v1/opencircle/board/",
-            "https://api.countapi.xyz/get/opencircle.oc/visits"
-          ];
-      for (const url of endpoints) {
-        try {
-          const res = await fetch(url);
-          if (!res.ok) continue;
-          const data = await res.json();
-          const n = data.count ?? data.value;
-          if (typeof n === "number") {
-            visitEl.textContent = n.toLocaleString("en-AU");
-            if (firstToday) localStorage.setItem(visitKey, todayAest);
-            return;
-          }
-        } catch (err) { /* try next */ }
-      }
-      let n = Number(localStorage.getItem("oc-local-visits") || "0");
-      if (firstToday) {
-        n += 1;
-        localStorage.setItem("oc-local-visits", String(n));
-        localStorage.setItem(visitKey, todayAest);
-      }
-      visitEl.textContent = n.toLocaleString("en-AU");
-    }
-    loadVisits();
 
     logoBtn.addEventListener("click", () => {
       let i = Math.floor(Math.random() * jokes.length);
